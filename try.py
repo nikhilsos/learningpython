@@ -15,11 +15,9 @@ def count(index): # function to count frequency
         for i in range(len(lst)):
             if lst[index] == lst[i]:
                 x += 1
-
     return x
 
-lst2 = []
-
+lst2 = [] # initializing list with not reapeating elements
 for index in range(len(lst)):
     if lst[index] not in lst2:
         lst2.append(lst[index])
@@ -35,30 +33,18 @@ def chktype(index): # fucntion to check human vs non human
     else:
         return 'human'
 
-
-
-
 countarr = []
 typearr = []
 
 
 for i in range(len(lst2)):
-
-
     countarr.append(count(i))
     typearr.append(chktype(i))
-
-
-#details = zip(countarr, typearr)
-#d = dict(zip(lst2, details))
-
-#
 
 nlist = []
 
 for index in range(len(lst2)):
     nlist.append({'occurence': countarr[index], 'type': typearr[index]})
-
 
 data = []
 for index in range(len(lst2)):
