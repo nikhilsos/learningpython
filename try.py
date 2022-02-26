@@ -1,0 +1,88 @@
+import re
+import json
+
+s = open("websiteData.txt", 'r', encoding='utf-8')
+# opening txt file
+
+contents = s.read()
+lst = re.findall('[^,;\s]+@[^,;\s]+', contents)
+# finding strings with email formats
+
+
+def count(index): # function to count frequency
+    for index in range(len(lst)):
+        x = 0
+        for i in range(len(lst)):
+            if lst[index] == lst[i]:
+                x += 1
+
+    return x
+
+lst2 = []
+
+for index in range(len(lst)):
+    if lst[index] not in lst2:
+        lst2.append(lst[index])
+
+
+
+def chktype(index): # fucntion to check human vs non human
+    a = lst2[index].find('@')
+
+    if (len((lst2[index])[:a])< 8) & (lst2[index].find('.') > len((lst2[index])[:a])) :
+        # considering letter count less than 8 before '@' and not having name.surname@email.com format to be non-human
+        return 'nonhuman'
+    else:
+        return 'human'
+
+
+
+
+countarr = []
+typearr = []
+
+
+for i in range(len(lst2)):
+
+
+    countarr.append(count(i))
+    typearr.append(chktype(i))
+
+
+#details = zip(countarr, typearr)
+#d = dict(zip(lst2, details))
+
+#
+
+nlist = []
+
+for index in range(len(lst2)):
+    nlist.append({'occurence': countarr[index], 'type': typearr[index]})
+
+
+data = []
+for index in range(len(lst2)):
+    data.append({ lst2[index] : nlist[index]})
+    #'mail': 'details':
+print(nlist)
+
+jsonStr = json.dumps(data)
+print(jsonStr)
+
+data = json.dumps(data, indent = 4)
+with open("results.json", "w") as outfile:
+    outfile.write(data)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
